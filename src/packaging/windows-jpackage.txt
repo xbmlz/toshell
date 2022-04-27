@@ -1,4 +1,4 @@
---type msi
+--type ${pkg.type}
 --name ${app.name}
 --win-menu
 --win-menu-group ${windows.vendor}
