@@ -1,6 +1,7 @@
 package org.viodo.toshell.ui;
 
-import org.viodo.toshell.ui.UIConstants;
+import cn.hutool.core.thread.ThreadUtil;
+import org.viodo.toshell.ui.listener.FrameListener;
 
 import javax.swing.*;
 import java.io.Serial;
@@ -17,11 +18,16 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         initComponents();
+        initListeners();
     }
 
     private void initComponents() {
         setName(UIConstants.APP_NAME);
         setTitle(UIConstants.APP_NAME);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    private void initListeners() {
+        ThreadUtil.execute(FrameListener::addListener);
     }
 }

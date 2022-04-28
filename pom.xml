@@ -57,6 +57,9 @@
         <pty4j.version>0.12.7</pty4j.version>
         <jetbrains-annotations.version>23.0.0</jetbrains-annotations.version>
         <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.18.24</lombok.version>
+        <forms_rt.version>7.0.3</forms_rt.version>
+        <hutool.version>5.8.0.M4</hutool.version>
     </properties>
 
     <repositories>
@@ -89,6 +92,11 @@
             <version>${flatlaf-extras.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>forms_rt</artifactId>
+            <version>${forms_rt.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>${jsch.version}</version>
@@ -113,7 +121,17 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -137,6 +155,10 @@
             <!-- Add the default resource path back in - by overriding above it disables the default -->
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <filtering>false</filtering>
             </resource>
         </resources>
 

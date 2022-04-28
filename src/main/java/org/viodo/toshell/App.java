@@ -70,20 +70,15 @@ public class App {
 
             // TODO create and show the main frame
             mainFrame = new MainFrame();
-
             mainFrame.setPreferredSize(SystemInfo.isJava_9_orLater ? new Dimension(1024, 768)
                     : new Dimension(1660, 880));
 
             // show frame
             mainFrame.setContentPane(MainForm.getInstance().getMainPanel());
+            MainForm.getInstance().initComponents();
             mainFrame.pack();
             mainFrame.setLocationRelativeTo(null);
             mainFrame.setVisible(true);
-            // init main frame
-            MainForm.getInstance().init();
-            // set split pane divider location
-            MainForm.getInstance().getLrSplitPane().setDividerLocation(0.7);
-            MainForm.getInstance().getTbSplitPane().setDividerLocation(0.7);
         });
     }
 }

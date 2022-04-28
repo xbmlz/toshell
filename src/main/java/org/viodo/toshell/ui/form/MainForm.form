@@ -26,7 +26,7 @@
               <splitpane position="left"/>
             </constraints>
             <properties>
-              <dividerLocation value="0"/>
+              <dividerLocation value="200"/>
               <dividerSize value="1"/>
               <enabled value="true"/>
               <orientation value="0"/>
