@@ -1,5 +1,6 @@
 package org.viodo.toshell;
 
+import cn.hutool.system.SystemUtil;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatInspector;
@@ -7,6 +8,7 @@ import com.formdev.flatlaf.extras.FlatUIDefaultsInspector;
 import com.formdev.flatlaf.util.SystemInfo;
 import org.viodo.toshell.ui.form.MainForm;
 import org.viodo.toshell.ui.MainFrame;
+import org.viodo.toshell.ui.form.StatusBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,10 +74,10 @@ public class App {
             mainFrame = new MainFrame();
             mainFrame.setPreferredSize(SystemInfo.isJava_9_orLater ? new Dimension(1024, 768)
                     : new Dimension(1660, 880));
-
             // show frame
             mainFrame.setContentPane(MainForm.getInstance().getMainPanel());
             MainForm.getInstance().initComponents();
+            StatusBar.getInstance().initialize(mainFrame);
             mainFrame.pack();
             mainFrame.setLocationRelativeTo(null);
             mainFrame.setVisible(true);

@@ -8,7 +8,7 @@
     <properties>
       <background color="-1"/>
     </properties>
-    <border type="etched"/>
+    <border type="none"/>
     <children>
       <component id="17e1b" class="javax.swing.JButton" binding="mainBtn">
         <constraints>

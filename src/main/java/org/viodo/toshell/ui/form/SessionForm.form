@@ -8,7 +8,7 @@
     <properties>
       <background color="-1"/>
     </properties>
-    <border type="etched"/>
+    <border type="none"/>
     <children>
       <tabbedpane id="f1883" binding="sessionTab">
         <constraints>
@@ -27,10 +27,6 @@
             <properties>
               <enabled value="true"/>
             </properties>
-            <clientProperties>
-              <TABBED_PANE_TAB_CLOSABLE class="java.lang.Boolean" value="true"/>
-              <TABBED_PANE_TAB_CLOSE_TOOLTIPTEXT class="java.lang.String" value="Close"/>
-            </clientProperties>
             <border type="none"/>
             <children/>
           </grid>

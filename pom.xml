@@ -60,6 +60,8 @@
         <lombok.version>1.18.24</lombok.version>
         <forms_rt.version>7.0.3</forms_rt.version>
         <hutool.version>5.8.0.M4</hutool.version>
+        <miglayout.version>5.3</miglayout.version>
+        <jgoodies.version>1.9.0</jgoodies.version>
     </properties>
 
     <repositories>
@@ -95,6 +97,16 @@
             <groupId>com.intellij</groupId>
             <artifactId>forms_rt</artifactId>
             <version>${forms_rt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-swing</artifactId>
+            <version>${miglayout.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-forms</artifactId>
+            <version>${jgoodies.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>

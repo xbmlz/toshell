@@ -82,14 +82,11 @@ public class SessionForm {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.setBackground(new Color(-1));
-        mainPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         sessionTab = new JTabbedPane();
         mainPanel.add(sessionTab, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setEnabled(true);
-        panel1.putClientProperty("TABBED_PANE_TAB_CLOSABLE", Boolean.TRUE);
-        panel1.putClientProperty("TABBED_PANE_TAB_CLOSE_TOOLTIPTEXT", "Close");
         sessionTab.addTab("Untitled", panel1);
     }
 

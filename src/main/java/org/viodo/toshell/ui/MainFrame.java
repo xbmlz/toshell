@@ -1,6 +1,7 @@
 package org.viodo.toshell.ui;
 
 import cn.hutool.core.thread.ThreadUtil;
+import org.viodo.toshell.ui.form.StatusBar;
 import org.viodo.toshell.ui.listener.FrameListener;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initListeners() {
+        ThreadUtil.execute(StatusBar::updateMemoryProgressBar);
         ThreadUtil.execute(FrameListener::addListener);
     }
 }

@@ -1,12 +1,9 @@
 package org.viodo.toshell.ui.form;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
 
 /**
  * 主界面
@@ -37,7 +34,8 @@ public class MainForm {
 
     public void initComponents() {
         instance.getMainPanel().updateUI();
-        instance.getLrSplitPane().setRightComponent(MonitorPanel.getInstance().getMainPanel());
+        instance.getMainPanel().add(StatusBar.getInstance(), BorderLayout.SOUTH);
+        instance.getLrSplitPane().setRightComponent(MonitorForm.getInstance().getMainPanel());
         instance.getTbSplitPane().setTopComponent(SessionForm.getInstance().getMainPanel());
         instance.getTbSplitPane().setBottomComponent(SftpForm.getInstance().getMainPanel());
     }
@@ -58,15 +56,15 @@ public class MainForm {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setLayout(new BorderLayout(0, 0));
         lrSplitPane = new JSplitPane();
         lrSplitPane.setDividerLocation(500);
-        lrSplitPane.setDividerSize(1);
+        lrSplitPane.setDividerSize(2);
         lrSplitPane.setEnabled(true);
-        mainPanel.add(lrSplitPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        mainPanel.add(lrSplitPane, BorderLayout.CENTER);
         tbSplitPane = new JSplitPane();
         tbSplitPane.setDividerLocation(200);
-        tbSplitPane.setDividerSize(1);
+        tbSplitPane.setDividerSize(2);
         tbSplitPane.setEnabled(true);
         tbSplitPane.setOrientation(0);
         tbSplitPane.setToolTipText("");
