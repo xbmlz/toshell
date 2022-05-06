@@ -14,10 +14,7 @@ import java.awt.*;
 public class MainForm {
 
     private JPanel mainPanel;
-
     private JSplitPane lrSplitPane;
-
-    private JSplitPane tbSplitPane;
 
     private static MainForm instance;
 
@@ -35,9 +32,8 @@ public class MainForm {
     public void initComponents() {
         instance.getMainPanel().updateUI();
         instance.getMainPanel().add(StatusBar.getInstance(), BorderLayout.SOUTH);
-        instance.getLrSplitPane().setRightComponent(MonitorForm.getInstance().getMainPanel());
-        instance.getTbSplitPane().setTopComponent(SessionForm.getInstance().getMainPanel());
-        instance.getTbSplitPane().setBottomComponent(SftpForm.getInstance().getMainPanel());
+        instance.getLrSplitPane().setRightComponent(SessionForm.getInstance().getMainPanel());
+        instance.getLrSplitPane().setLeftComponent(SessionManager.getInstance().getMainPanel());
     }
 
     {
@@ -57,18 +53,12 @@ public class MainForm {
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel.setForeground(new Color(-12828863));
         lrSplitPane = new JSplitPane();
-        lrSplitPane.setDividerLocation(500);
-        lrSplitPane.setDividerSize(2);
-        lrSplitPane.setEnabled(true);
+        lrSplitPane.setDividerLocation(0);
+        lrSplitPane.setDividerSize(5);
+        lrSplitPane.setForeground(new Color(-12828863));
         mainPanel.add(lrSplitPane, BorderLayout.CENTER);
-        tbSplitPane = new JSplitPane();
-        tbSplitPane.setDividerLocation(200);
-        tbSplitPane.setDividerSize(2);
-        tbSplitPane.setEnabled(true);
-        tbSplitPane.setOrientation(0);
-        tbSplitPane.setToolTipText("");
-        lrSplitPane.setLeftComponent(tbSplitPane);
     }
 
     /**

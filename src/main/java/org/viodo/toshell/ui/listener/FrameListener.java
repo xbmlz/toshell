@@ -2,6 +2,7 @@ package org.viodo.toshell.ui.listener;
 
 import org.viodo.toshell.App;
 import org.viodo.toshell.ui.form.MainForm;
+import org.viodo.toshell.ui.form.SessionForm;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -21,8 +22,10 @@ public class FrameListener {
             @Override
             public void componentResized(ComponentEvent e) {
                 // set split pane divider location
-                MainForm.getInstance().getLrSplitPane().setDividerLocation(0.7);
-                MainForm.getInstance().getTbSplitPane().setDividerLocation(0.7);
+                MainForm.getInstance().getLrSplitPane().setDividerLocation(0.2);
+                SessionForm.getInstance().getLrSplitPane().setDividerLocation(0.8);
+                SessionForm.getInstance().getTbSplitPane().setDividerLocation(0.8);
+//                MainForm.getInstance().getTbSplitPane().setDividerLocation(0.7);
             }
 
             @Override

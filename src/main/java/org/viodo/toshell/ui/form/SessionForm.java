@@ -1,12 +1,12 @@
 package org.viodo.toshell.ui.form;
 
+import cn.hutool.core.util.RandomUtil;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import lombok.Getter;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.function.BiConsumer;
@@ -21,7 +21,9 @@ import static com.formdev.flatlaf.FlatClientProperties.*;
 @Getter
 public class SessionForm {
     private JPanel mainPanel;
-    private JTabbedPane sessionTab;
+    private JTabbedPane mainTab;
+    private JSplitPane lrSplitPane;
+    private JSplitPane tbSplitPane;
 
     private static SessionForm instance;
 
@@ -45,11 +47,17 @@ public class SessionForm {
         JToolBar trailing = new JToolBar();
         trailing.setFloatable(false);
         trailing.setBorder(null);
-        trailing.add(new JButton(new FlatSVGIcon("icons/add.svg")));
+        JButton addBtn = new JButton(new FlatSVGIcon("icons/add.svg"));
+        // TODO add session
+        addBtn.addActionListener(e -> {
+            mainTab.addTab(RandomUtil.randomString(5), new JPanel());
+        });
 
-        sessionTab.putClientProperty(TABBED_PANE_TAB_CLOSABLE, true);
-        sessionTab.putClientProperty(TABBED_PANE_TAB_CLOSE_TOOLTIPTEXT, "Close");
-        sessionTab.putClientProperty(TABBED_PANE_TAB_CLOSE_CALLBACK,
+//        trailing.add(addBtn);
+
+        mainTab.putClientProperty(TABBED_PANE_TAB_CLOSABLE, true);
+        mainTab.putClientProperty(TABBED_PANE_TAB_CLOSE_TOOLTIPTEXT, "Close");
+        mainTab.putClientProperty(TABBED_PANE_TAB_CLOSE_CALLBACK,
                 (BiConsumer<JTabbedPane, Integer>) (tabPane, tabIndex) -> {
                     AWTEvent e = EventQueue.getCurrentEvent();
                     int modifiers = (e instanceof MouseEvent) ? ((MouseEvent) e).getModifiers() : 0;
@@ -58,9 +66,13 @@ public class SessionForm {
                             "Tab Closed", JOptionPane.PLAIN_MESSAGE);
                 });
 
-        sessionTab.putClientProperty(TABBED_PANE_TRAILING_COMPONENT, trailing);
+        mainTab.putClientProperty(TABBED_PANE_TRAILING_COMPONENT, trailing);
 
-        sessionTab.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        mainTab.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+
+        if (mainTab.getTabCount() == 0) {
+            mainTab.addTab("All Session", SessionManager.getInstance().getMainPanel());
+        }
     }
 
 
@@ -82,12 +94,13 @@ public class SessionForm {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.setBackground(new Color(-1));
-        sessionTab = new JTabbedPane();
-        mainPanel.add(sessionTab, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.setEnabled(true);
-        sessionTab.addTab("Untitled", panel1);
+        mainTab = new JTabbedPane();
+        mainPanel.add(mainTab, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        lrSplitPane = new JSplitPane();
+        mainTab.addTab("Untitled", lrSplitPane);
+        tbSplitPane = new JSplitPane();
+        tbSplitPane.setOrientation(0);
+        lrSplitPane.setLeftComponent(tbSplitPane);
     }
 
     /**

@@ -13,4 +13,7 @@ public class UIConstants {
 
     public final static String APP_VERSION = "v_0.0.0_220427";
 
+    public final static String NEW_SESSION_GROUP_TITLE = "New Session Group";
+
+    public final static String NEW_SESSION_GROUP_MESSAGE = "Enter Group Name";
 }
