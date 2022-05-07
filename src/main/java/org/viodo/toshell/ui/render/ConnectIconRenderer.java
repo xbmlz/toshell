@@ -1,7 +1,8 @@
 package org.viodo.toshell.ui.render;
 
 import com.formdev.flatlaf.icons.FlatFileViewDirectoryIcon;
-import org.viodo.toshell.model.SessionModel;
+import org.viodo.toshell.bean.SessionInfo;
+import org.viodo.toshell.ui.UIConstants;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -21,9 +22,8 @@ public class ConnectIconRenderer extends DefaultTreeCellRenderer {
                                                   int row, boolean hasFocus) {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-        System.out.println(node.getUserObject());
-        if (node.getUserObject() instanceof SessionModel sessionModel) {
-            if (sessionModel.getType().equals("group")){
+        if (node.getUserObject() instanceof SessionInfo sessionInfo) {
+            if (sessionInfo.getType().equals(UIConstants.SESSION_TYPE_GROUP)){
                 this.setIcon(new FlatFileViewDirectoryIcon());
             }
         }

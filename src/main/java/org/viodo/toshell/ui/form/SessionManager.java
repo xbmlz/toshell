@@ -8,7 +8,9 @@ import com.formdev.flatlaf.icons.FlatSearchIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import lombok.Getter;
-import org.viodo.toshell.model.SessionModel;
+import lombok.extern.slf4j.Slf4j;
+import org.viodo.toshell.bean.SessionInfo;
+import org.viodo.toshell.conf.AppSettings;
 import org.viodo.toshell.ui.UIConstants;
 import org.viodo.toshell.ui.components.SessionTreeModel;
 import org.viodo.toshell.ui.dialog.InputDialog;
@@ -23,12 +25,17 @@ import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * @author chenxc
  */
 @Getter
 public class SessionManager {
+
+    private final Logger logger = Logger.getLogger(SessionManager.class.getName());
+
     private JPanel mainPanel;
     private JPanel sessionPanel;
     private JToolBar sessionToolbar;
@@ -54,8 +61,6 @@ public class SessionManager {
 
 
     private void init() {
-        // TODO: session group
-
 
         searchTextField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search");
         searchTextField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON,
@@ -65,15 +70,10 @@ public class SessionManager {
         addPopupMenu = new JPopupMenu();
         addSessionMenuItem = new JMenuItem("New Connection");
         addSessionMenuItem.setIcon(new FlatFileViewFileIcon());
-        addSessionMenuItem.addActionListener(e -> {
-            System.out.println("New Connection");
-        });
+        addSessionMenuItem.addActionListener(e -> newSession());
         addGroupMenuItem = new JMenuItem("New Group");
         addGroupMenuItem.setIcon(new FlatFileViewDirectoryIcon());
-
-        addGroupMenuItem.addActionListener(e -> {
-            newSessionGroup();
-        });
+        addGroupMenuItem.addActionListener(e -> newSessionGroup());
         addPopupMenu.add(addSessionMenuItem);
         addPopupMenu.add(addGroupMenuItem);
 
@@ -119,7 +119,6 @@ public class SessionManager {
             }
         });
 
-
         // add button
         addBtn.setIcon(new FlatSVGIcon("icons/add.svg"));
         addBtn.putClientProperty("JButton.buttonType", "roundRect");
@@ -137,7 +136,6 @@ public class SessionManager {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     Component componentAt = sessionTree.getComponentAt(e.getPoint());
                     if (componentAt == null) {
-                        System.out.println("componentAt is null");
                         sessionTree.clearSelection();
                     }
                 }
@@ -162,16 +160,42 @@ public class SessionManager {
     }
 
     private void newSessionGroup() {
-        Object res = InputDialog.show(MainForm.getInstance().getMainPanel(), UIConstants.NEW_SESSION_GROUP_TITLE,
+        Object input = InputDialog.show(MainForm.getInstance().getMainPanel(), UIConstants.NEW_SESSION_GROUP_TITLE,
                 UIConstants.NEW_SESSION_GROUP_MESSAGE);
-        if (res != null) {
+        if (input != null) {
+            // 判断是否有选中的节点
+            TreePath path = sessionTree.getSelectionPath();
             DefaultTreeModel treeModel = (DefaultTreeModel) sessionTree.getModel();
-            DefaultMutableTreeNode treeRootNode = (DefaultMutableTreeNode) sessionTree.getModel().getRoot();
-            DefaultMutableTreeNode child = new DefaultMutableTreeNode(SessionModel.createGroup(res.toString()));
+            DefaultMutableTreeNode treeRootNode;
+            DefaultMutableTreeNode child;
+            SessionInfo sessionGroup;
+            if (path == null) {
+                // 在根节点添加新节点
+                treeRootNode = (DefaultMutableTreeNode) sessionTree.getModel().getRoot();
+                sessionGroup = SessionInfo.createGroup(String.valueOf(input), UIConstants.SESSION_TYPE_GROUP_ROOT_ID);
+            } else {
+                // 在其他节点添加新节点
+                treeRootNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+                SessionInfo sessionInfo = (SessionInfo) treeRootNode.getUserObject();
+                if (!Objects.equals(sessionInfo.getType(), UIConstants.SESSION_TYPE_GROUP)) {
+                    treeRootNode = (DefaultMutableTreeNode) treeRootNode.getParent();
+                    SessionInfo parentSession = (SessionInfo) treeRootNode.getUserObject();
+                    sessionGroup = SessionInfo.createGroup(String.valueOf(input), parentSession.getId());
+                } else {
+                    sessionGroup = SessionInfo.createGroup(String.valueOf(input), sessionInfo.getId());
+                }
+            }
+            AppSettings.SESSION_LIST.add(sessionGroup);
+            child = new DefaultMutableTreeNode(sessionGroup);
             treeModel.insertNodeInto(child, treeRootNode, treeRootNode.getChildCount());
+            sessionTree.expandPath(new TreePath(treeRootNode.getPath()));
             sessionTree.updateUI();
-            System.out.println(res);
+            logger.info(AppSettings.SESSION_LIST.toString());
         }
+    }
+
+    private void newSession() {
+
     }
 
 

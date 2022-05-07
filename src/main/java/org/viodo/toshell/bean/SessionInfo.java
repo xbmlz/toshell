@@ -1,8 +1,12 @@
-package org.viodo.toshell.model;
+package org.viodo.toshell.bean;
 
 import cn.hutool.core.util.IdUtil;
 import lombok.Getter;
 import lombok.Setter;
+import org.viodo.toshell.ui.UIConstants;
+
+import java.util.Date;
+
 
 /**
  * connect model
@@ -11,7 +15,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class SessionModel {
+public class SessionInfo {
 
     /**
      * uuid
@@ -69,16 +73,21 @@ public class SessionModel {
      */
     private String privateKey;
 
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
     @Override
     public String toString() {
         return name;
     }
 
-    public static SessionModel createGroup(String groupName) {
-        SessionModel info = new SessionModel();
+    public static SessionInfo createGroup(String groupName, String parentId) {
+        SessionInfo info = new SessionInfo();
         info.setId(IdUtil.simpleUUID());
-        info.setParentId("0");
-        info.setType("group");
+        info.setParentId(parentId);
+        info.setType(UIConstants.SESSION_TYPE_GROUP);
         info.setName(groupName);
         return info;
     }

@@ -25,7 +25,6 @@ public class FrameListener {
                 MainForm.getInstance().getLrSplitPane().setDividerLocation(0.2);
                 SessionForm.getInstance().getLrSplitPane().setDividerLocation(0.8);
                 SessionForm.getInstance().getTbSplitPane().setDividerLocation(0.8);
-//                MainForm.getInstance().getTbSplitPane().setDividerLocation(0.7);
             }
 
             @Override
